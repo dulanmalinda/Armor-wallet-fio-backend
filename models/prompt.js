@@ -1,11 +1,9 @@
-// models/User.js
 const mongoose = require('mongoose');
 
 const promptSchema = new mongoose.Schema({
    walletAddress: {
     type: String,
     required: true,
-    unique: true,
   },
   prompt: {
     type: String,
