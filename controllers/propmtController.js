@@ -1,10 +1,10 @@
 const Prompt = require('../models/prompt');
 
 exports.createPrompt = async (req, res) => {
-  const { walletAddress, prompt, upVoteCount, downVoteCount, votedWallets } = req.body;
+  const { walletAddress, prompt, upVoteCount, downVoteCount, upVotedWallets,downVotedWallets } = req.body;
 
   try {
-    const newPrompt = new Prompt({ walletAddress, prompt, upVoteCount,downVoteCount,votedWallets});
+    const newPrompt = new Prompt({ walletAddress, prompt, upVoteCount,downVoteCount,upVotedWallets,downVotedWallets});
     await newPrompt.save();
     res.status(201).json(newPrompt);
   } catch (error) {
@@ -32,7 +32,7 @@ exports.updateVoteCount = async (req, res) => {
   try {
     const update = {
       $inc: voteType === 'upvote' ? { upVoteCount: 1 } : { downVoteCount: 1 },
-      $push: { votedWallets: votedWalletAddress },
+      $push: voteType === 'upvote' ?{ upVotedWallets: votedWalletAddress }:{ downVotedWallets: votedWalletAddress },
     };
     const updatedPrompt = await Prompt.findByIdAndUpdate(id, update, { new: true });
 

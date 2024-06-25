@@ -17,7 +17,11 @@ const promptSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  votedWallets: {
+  upVotedWallets: {
+    type : Array,
+    required: true
+  },
+  downVotedWallets: {
     type : Array,
     required: true
   }
