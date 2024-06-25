@@ -46,6 +46,48 @@ exports.updateVoteCount = async (req, res) => {
   }
 };
 
+exports.removeVote = async (req, res) => {
+  const { id } = req.params; // Prompt ID from the URL parameters
+  const { voteType, votedWalletAddress } = req.body; // Type of vote: 'upvote' or 'downvote'
+
+  if (!['upvote', 'downvote'].includes(voteType)) {
+    return res.status(400).json({ message: 'Invalid vote type.' });
+  }
+
+  try {
+    const prompt = await Prompt.findById(id);
+
+    if (!prompt) {
+      return res.status(404).json({ message: 'Prompt not found.' });
+    }
+
+    let update = {};
+    if (voteType === 'upvote') {
+      if (!prompt.upVotedWallets.includes(votedWalletAddress)) {
+        return res.status(400).json({ message: 'Wallet address has not upvoted this prompt.' });
+      }
+      update = {
+        $inc: { upVoteCount: -1 },
+        $pull: { upVotedWallets: votedWalletAddress },
+      };
+    } else {
+      if (!prompt.downVotedWallets.includes(votedWalletAddress)) {
+        return res.status(400).json({ message: 'Wallet address has not downvoted this prompt.' });
+      }
+      update = {
+        $inc: { downVoteCount: -1 },
+        $pull: { downVotedWallets: votedWalletAddress },
+      };
+    }
+
+    const updatedPrompt = await Prompt.findByIdAndUpdate(id, update, { new: true });
+
+    res.status(200).json(updatedPrompt);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.checkWalletAddress = async (req, res) => {
   const {walletAddress} = req.query;
 
