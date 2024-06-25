@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  voteCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const User = mongoose.model('User', UserSchema);

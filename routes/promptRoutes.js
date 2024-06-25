@@ -1,7 +1,7 @@
 // routes/userRoutes.js
 const express = require('express');
 const { createPrompt, getPrompts,updateVoteCount,removeVote,checkWalletAddress } = require('../controllers/propmtController');
-const { getUserPromptCount, incrementPromptCount } = require('../controllers/usersController');
+const { getUserPromptCount, incrementPromptCount, incrementVoteCount, decrementVoteCount} = require('../controllers/usersController');
 const router = express.Router();
 
 router.post('/createPrompt', createPrompt);
@@ -12,5 +12,7 @@ router.get('/check-wallet',checkWalletAddress)
 
 router.get('/user', getUserPromptCount);
 router.post('/user/increment', incrementPromptCount);
+router.post('/user/increment-vote', incrementVoteCount);
+router.post('/user/decrement-vote', decrementVoteCount);
 
 module.exports = router;

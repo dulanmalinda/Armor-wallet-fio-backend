@@ -11,7 +11,7 @@ const getUserPromptCount = async (req, res) => {
       await user.save();
     }
 
-    res.json({ walletAddress: user.walletAddress, promptsCount: user.promptsCount });
+    res.json({ walletAddress: user.walletAddress, promptsCount: user.promptsCount, voteCount:user.voteCount });
   } catch (error) {
     console.log(error);
     res.status(500).send('Server Error');
@@ -38,7 +38,49 @@ const incrementPromptCount = async (req, res) => {
   }
 };
 
+// Increment user's Vote count
+const incrementVoteCount = async (req, res) => {
+  const { walletAddress } = req.query;
+
+  try {
+    let user = await User.findOne({ walletAddress });
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    user.voteCount += 1;
+    await user.save();
+
+    res.json({ walletAddress: user.walletAddress, promptsCount: user.promptsCount, voteCount: user.voteCount});
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+};
+
+// Decrement user's Vote count
+const decrementVoteCount = async (req, res) => {
+  const { walletAddress } = req.query;
+
+  try {
+    let user = await User.findOne({ walletAddress });
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    user.voteCount -= 1;
+    await user.save();
+
+    res.json({ walletAddress: user.walletAddress, promptsCount: user.promptsCount, voteCount: user.voteCount});
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
   getUserPromptCount,
   incrementPromptCount,
+  incrementVoteCount,
+  decrementVoteCount
 };
