@@ -14,7 +14,7 @@ exports.createPrompt = async (req, res) => {
 
 exports.getPrompts = async (req, res) => {
   try {
-    const prompts = await Prompt.find().sort({ upVoteCount: -1 });
+    const prompts = await Prompt.find().sort({ _id: -1  });
     res.status(200).json(prompts);
   } catch (error) {
     res.status(500).json({ message: error.message });
