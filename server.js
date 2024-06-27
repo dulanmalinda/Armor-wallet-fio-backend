@@ -26,7 +26,7 @@ app.use('/api', promptRoutes);
 
 // Add a route for the root path
 app.get('/', (req, res) => {
-  res.send('Welcome to the ARMOR API test');
+  res.send('Welcome to the ARMOR API');
 });
 
 const PORT = process.env.PORT || 5000;
