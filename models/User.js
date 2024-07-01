@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  walletAddress: {
+  fioUsername: {
     type: String,
     required: true,
     unique: true,
   },
-  promptsCount: {
-    type: Number,
-    default: 0,
+  walletAddress: {
+    type: String,
+    required: true,
   },
-  voteCount: {
-    type: Number,
-    default: 0,
-  },
-});
+},{ collection: 'users' });
 
 const User = mongoose.model('User', UserSchema);
 
