@@ -28,7 +28,7 @@ app.use('/api', userRoutes);
 
 // Add a route for the root path
 app.get('/', (req, res) => {
-  res.send('Welcome to the ARMOR FIO API v4');
+  res.send('Welcome to the ARMOR FIO API');
 });
 
 const PORT = process.env.PORT || 5000;
