@@ -13,8 +13,6 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
-
 const corsOptions = {
   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -23,11 +21,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+//app.use(express.json());
+
 app.use('/api', userRoutes);
 
 // Add a route for the root path
 app.get('/', (req, res) => {
-  res.send('Welcome to the ARMOR FIO API');
+  res.send('Welcome to the ARMOR FIO API v4');
 });
 
 const PORT = process.env.PORT || 5000;
