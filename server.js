@@ -15,8 +15,7 @@ const app = express();
 
 const corsOptions = {
   origin: '*',
-  methods: '*',
-  allowedHeaders: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204
 };
 
@@ -28,7 +27,7 @@ app.use('/api', userRoutes);
 
 // Add a route for the root path
 app.get('/', (req, res) => {
-  res.send('Welcome to the ARMOR FIO API');
+  res.send('Welcome to the ARMOR FIO API v4');
 });
 
 const PORT = process.env.PORT || 5000;
