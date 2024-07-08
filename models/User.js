@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tnxHash:{
+    type: String,
+    required: true,
+  }
 },{ collection: 'users' });
 
 const User = mongoose.model('User', UserSchema);

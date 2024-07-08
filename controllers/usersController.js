@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 const saveUser = async (req, res) => {
-  const { fioUsername, walletAddress } = req.body;
+  const { fioUsername, walletAddress,tnxHash } = req.body;
 
   try {
     let user = await User.findOne({ fioUsername });
@@ -13,6 +13,7 @@ const saveUser = async (req, res) => {
     user = new User({
       fioUsername,
       walletAddress,
+      tnxHash,
     });
 
     await user.save();
