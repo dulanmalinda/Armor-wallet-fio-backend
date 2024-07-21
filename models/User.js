@@ -8,11 +8,11 @@ const UserSchema = new mongoose.Schema({
   },
   walletAddress: {
     type: String,
-    required: true,
+    required: false,
   },
   tnxHash:{
     type: String,
-    required: true,
+    required: false,
   }
 },{ collection: 'users' });
 

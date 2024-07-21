@@ -49,7 +49,11 @@ const checkUsernameAvailability = async (req, res) => {
     const user = await User.findOne({ fioUsername: { $regex: new RegExp(`^${fioUsername}$`, 'i') } });
 
     if (user) {
-      return res.status(200).json({ available: false });
+      if (!user.walletAddress) {
+        return res.status(200).json({ available: false, isSale: true });
+      } else {
+        return res.status(200).json({ available: false, isSale: false });
+      }
     }
 
     res.status(200).json({ available: true });
@@ -58,6 +62,7 @@ const checkUsernameAvailability = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 module.exports = {
   saveUser,
