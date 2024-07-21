@@ -46,7 +46,7 @@ const checkUsernameAvailability = async (req, res) => {
   const { fioUsername } = req.params;
 
   try {
-    const user = await User.findOne({ fioUsername });
+    const user = await User.findOne({ fioUsername: { $regex: new RegExp(`^${fioUsername}$`, 'i') } });
 
     if (user) {
       return res.status(200).json({ available: false });
